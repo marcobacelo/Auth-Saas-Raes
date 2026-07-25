@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: auth-saas-raes
+  sql:
+    init:
+      mode: never
+
+auth:
+  jwt:
+    access-token-ttl-seconds: 900
+    ephemeral-keys: false
+
+server:
+  port: 8080

@@ -1,0 +1,14 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+
+auth:
+  jwt:
+    ephemeral-keys: true
+  seed:
+    enabled: true

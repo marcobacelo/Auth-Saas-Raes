@@ -1,0 +1,19 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/auth_saas
+    username: auth
+    password: auth
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+      continue-on-error: false
+
+auth:
+  jwt:
+    ephemeral-keys: true
+  seed:
+    enabled: true
