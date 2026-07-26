@@ -6,4 +6,6 @@ import java.util.UUID;
 public interface IdentityRepository {
 
     Optional<Identity> findByTenantIdAndUsername(UUID tenantId, String username);
+
+    Optional<Identity> findByTenantIdAndId(UUID tenantId, UUID identityId);
 }

@@ -82,7 +82,17 @@ class AuthenticateWithPasswordTest {
     private AuthenticateWithPassword useCaseWith(Optional<Identity> identity) {
         TenantRepository tenantRepository = slug -> Optional.of(
                 new Tenant(TENANT_ID, new TenantSlug(SLUG), TenantStatus.ACTIVE));
-        IdentityRepository identityRepository = (tenantId, username) -> identity;
+        IdentityRepository identityRepository = new IdentityRepository() {
+            @Override
+            public Optional<Identity> findByTenantIdAndUsername(UUID tenantId, String username) {
+                return identity;
+            }
+
+            @Override
+            public Optional<Identity> findByTenantIdAndId(UUID tenantId, UUID identityId) {
+                return Optional.empty();
+            }
+        };
         AccessTokenIssuer issuer = (subjectId, tenantId) -> new AccessToken("token", subjectId, tenantId);
         return new AuthenticateWithPassword(tenantRepository, identityRepository, passwordHasher, issuer);
     }
