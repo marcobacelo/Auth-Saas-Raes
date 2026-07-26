@@ -17,3 +17,6 @@ auth:
     ephemeral-keys: true
   seed:
     enabled: true
+  platform:
+    username: platform-dev-operator
+    password: platform-dev-secret

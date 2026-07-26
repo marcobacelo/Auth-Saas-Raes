@@ -12,3 +12,6 @@ auth:
     ephemeral-keys: true
   seed:
     enabled: true
+  platform:
+    username: platform-test-operator
+    password: platform-test-secret

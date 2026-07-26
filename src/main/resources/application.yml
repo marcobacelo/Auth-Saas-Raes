@@ -9,6 +9,9 @@ auth:
   jwt:
     access-token-ttl-seconds: 900
     ephemeral-keys: false
+  platform:
+    username: ${AUTH_PLATFORM_USERNAME:}
+    password: ${AUTH_PLATFORM_PASSWORD:}
 
 server:
   port: 8080

@@ -43,6 +43,20 @@ public class JdbcIdentityRepository implements IdentityRepository {
                 .optional();
     }
 
+    @Override
+    public void save(Identity identity) {
+        jdbcClient.sql("""
+                        INSERT INTO identities (identity_id, tenant_id, username, enabled, password_hash)
+                        VALUES (:id, :tenantId, :username, :enabled, :passwordHash)
+                        """)
+                .param("id", identity.id())
+                .param("tenantId", identity.tenantId())
+                .param("username", identity.username())
+                .param("enabled", identity.enabled())
+                .param("passwordHash", identity.passwordHash())
+                .update();
+    }
+
     private Identity mapIdentity(java.sql.ResultSet rs, int rowNum) throws java.sql.SQLException {
         return new Identity(
                 rs.getObject("identity_id", UUID.class),

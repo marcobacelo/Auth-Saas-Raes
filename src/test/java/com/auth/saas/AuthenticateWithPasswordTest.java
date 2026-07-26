@@ -80,8 +80,17 @@ class AuthenticateWithPasswordTest {
     }
 
     private AuthenticateWithPassword useCaseWith(Optional<Identity> identity) {
-        TenantRepository tenantRepository = slug -> Optional.of(
-                new Tenant(TENANT_ID, new TenantSlug(SLUG), TenantStatus.ACTIVE));
+        TenantRepository tenantRepository = new TenantRepository() {
+            @Override
+            public Optional<Tenant> findBySlug(TenantSlug slug) {
+                return Optional.of(new Tenant(TENANT_ID, new TenantSlug(SLUG), TenantStatus.ACTIVE));
+            }
+
+            @Override
+            public void save(Tenant tenant) {
+                throw new UnsupportedOperationException();
+            }
+        };
         IdentityRepository identityRepository = new IdentityRepository() {
             @Override
             public Optional<Identity> findByTenantIdAndUsername(UUID tenantId, String username) {
@@ -91,6 +100,11 @@ class AuthenticateWithPasswordTest {
             @Override
             public Optional<Identity> findByTenantIdAndId(UUID tenantId, UUID identityId) {
                 return Optional.empty();
+            }
+
+            @Override
+            public void save(Identity identityToSave) {
+                throw new UnsupportedOperationException();
             }
         };
         AccessTokenIssuer issuer = (subjectId, tenantId) -> new AccessToken("token", subjectId, tenantId);

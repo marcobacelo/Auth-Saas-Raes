@@ -5,6 +5,7 @@ import com.auth.saas.domain.auth.AuthenticateWithPassword;
 import com.auth.saas.domain.auth.GetAuthenticatedIdentity;
 import com.auth.saas.domain.identity.IdentityRepository;
 import com.auth.saas.domain.identity.PasswordHasher;
+import com.auth.saas.domain.tenant.ProvisionTenant;
 import com.auth.saas.domain.tenant.TenantRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,5 +28,13 @@ public class DomainConfig {
             TenantRepository tenantRepository,
             IdentityRepository identityRepository) {
         return new GetAuthenticatedIdentity(tenantRepository, identityRepository);
+    }
+
+    @Bean
+    ProvisionTenant provisionTenant(
+            TenantRepository tenantRepository,
+            IdentityRepository identityRepository,
+            PasswordHasher passwordHasher) {
+        return new ProvisionTenant(tenantRepository, identityRepository, passwordHasher);
     }
 }

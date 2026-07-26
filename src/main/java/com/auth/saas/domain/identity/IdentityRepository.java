@@ -8,4 +8,6 @@ public interface IdentityRepository {
     Optional<Identity> findByTenantIdAndUsername(UUID tenantId, String username);
 
     Optional<Identity> findByTenantIdAndId(UUID tenantId, UUID identityId);
+
+    void save(Identity identity);
 }
